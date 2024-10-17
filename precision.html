@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<title>Precision</title>
+<head>
+  <style>
+    body {
+      margin: 16px;
+      text-align: center;
+    }
+    .timer {
+      margin: 10px 0;
+      padding: 15px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #41ffaa;
+      font-size:15px;
+    }
+    button {
+      margin: 6px;
+      padding: 10px 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+    <h2>Venkata Kishore Korrapati Speed Check</h2>
+  <div id="countdown" class="timer">Count: </div>
+  <div id="target" class="timer">Your time: </div>
+  <button id="startButton">Start Timer</button>
+  <button id="stopButton">Stop Timer</button><br>
+  <script>
+    let stopTime; 
+    let countdownStarted = false; 
+    function recordTime() {
+      stopTime = Date.now();
+      console.log(`Stop Time: ${stopTime}`); 
+    }
+    document.getElementById('stopButton').onclick = recordTime;
+    function startTime() {
+      if (countdownStarted) return;
+      countdownStarted = true;
+      document.getElementById('target').innerText = 'Your time: ';
+      const countdownValue = Math.floor(Math.random() * 9) + 2;
+      for (let i = 0; i < countdownValue; i++) {
+        setTimeout(() => {
+          document.getElementById('countdown').innerText = `Count: ${countdownValue - i}`; 
+        }, i * 1000);
+      }
+      setTimeout(() => {
+        if (stopTime === undefined) {
+          document.getElementById('target').innerText = "Too Slow";
+        } else {
+          const elapsedTime = Date.now() - stopTime;
+          document.getElementById('target').innerText = `Time was ${elapsedTime} ms`;
+        }
+        countdownStarted = false;
+      }, countdownValue * 1000);
+    }
+    document.getElementById('startButton').onclick = startTime;
+  </script>
+</body>
+</html>
